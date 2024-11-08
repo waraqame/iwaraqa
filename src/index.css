@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  direction: rtl;
+}
+
+body {
+  @apply bg-gray-50;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* RTL specific editor styles */
+[contenteditable] {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
+}
+
+/* Handle English text and numbers within Arabic content */
+[contenteditable] span:not([lang]),
+[contenteditable] bdi {
+  unicode-bidi: embed;
+  direction: ltr;
+  text-align: left;
+}
+
+/* Numbers in Arabic text */
+[contenteditable] .number {
+  direction: ltr;
+  unicode-bidi: embed;
+  display: inline-block;
+}
+
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #9CA3AF;
+  pointer-events: none;
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
+}
+
+[contenteditable]:focus {
+  outline: none;
+}
+
+/* Force RTL for editor content */
+.prose {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
+  max-width: none;
+}
+
+/* Handle English text and numbers in prose content */
+.prose span:not([lang]),
+.prose bdi {
+  unicode-bidi: embed;
+  direction: ltr;
+  text-align: left;
+}
+
+.prose .number {
+  direction: ltr;
+  unicode-bidi: embed;
+  display: inline-block;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #1a202c;
+  font-weight: 600;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose ul, .prose ol {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-right: 1.625em;
+  padding-left: 0;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose blockquote {
+  font-style: normal;
+  border-right: 4px solid #e5e7eb;
+  border-left: none;
+  padding-right: 1em;
+  padding-left: 0;
+  color: #4b5563;
+}
+
+/* Custom scrollbar for RTL */
+.rtl-scrollbar {
+  direction: rtl;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.rtl-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.rtl-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 100px;
+}
+
+.rtl-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 100px;
+}
+
+.rtl-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

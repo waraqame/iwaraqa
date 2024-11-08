@@ -1,0 +1,58 @@
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String
+  email         String    @unique
+  password      String
+  avatar        String?
+  isVerified    Boolean   @default(false)
+  isAdmin       Boolean   @default(false)
+  credits       Int       @default(13)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  projects      Project[]
+  transactions  CreditTransaction[]
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  title       String
+  language    String
+  progress    Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  sections    Section[]
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Section {
+  id            Int      @id @default(autoincrement())
+  projectId     Int
+  type          String
+  content       String?  @db.Text
+  wordCount     Int      @default(0)
+  aiUsageCount  Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model CreditTransaction {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  amount      Int
+  type        String   // 'purchase' | 'usage'
+  description String?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

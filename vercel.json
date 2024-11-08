@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "regions": ["fra1"],
+  "env": {
+    "VITE_APP_URL": "production-url",
+    "VITE_API_URL": "api-url",
+    "OPENAI_API_KEY": "@openai-api-key",
+    "STRIPE_SECRET_KEY": "@stripe-secret-key",
+    "STRIPE_WEBHOOK_SECRET": "@stripe-webhook-secret",
+    "RESEND_API_KEY": "@resend-api-key"
+  }
+}

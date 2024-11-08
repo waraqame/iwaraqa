@@ -1,0 +1,34 @@
+runtime: nodejs18
+env: standard
+
+instance_class: F1
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 10
+  target_throughput_utilization: 0.6
+
+env_variables:
+  NODE_ENV: "production"
+  VITE_APP_URL: "https://waraqa.me"
+  VITE_API_URL: "https://api.waraqa.me"
+  DATABASE_URL: "postgresql://[USER]:[PASSWORD]@[IP_ADDRESS]/waraqa?host=/cloudsql/[INSTANCE_CONNECTION_NAME]"
+
+beta_settings:
+  cloud_sql_instances: [INSTANCE_CONNECTION_NAME]
+
+handlers:
+  - url: /static
+    static_dir: dist/static
+    secure: always
+
+  - url: /(.*\.(json|ico|js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))$
+    static_files: dist/\1
+    upload: dist/.*\.(json|ico|js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$
+    secure: always
+
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
